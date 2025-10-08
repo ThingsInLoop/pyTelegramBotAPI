@@ -1,7 +1,4 @@
-import asyncio # for future uses
-import ssl
 import aiohttp
-import certifi
 from telebot import types
 
 try:
@@ -31,14 +28,10 @@ REQUEST_LIMIT = 50
 class SessionManager:
     def __init__(self) -> None:
         self.session = None
-        self.ssl_context = ssl.create_default_context(cafile=certifi.where())
 
 
     async def create_session(self):
-        self.session = aiohttp.ClientSession(connector=aiohttp.TCPConnector(
-            limit=REQUEST_LIMIT,
-            ssl=self.ssl_context
-        ))
+        self.session = aiohttp.ClientSession()
         return self.session
 
     async def get_session(self):
